@@ -56,7 +56,7 @@ async def send(request):
 
 async def receive(request):
 	if "id" not in request.GET:
-		web.Response(text="Done")
+		return web.Response(text="Done")
 	id = request.GET["id"]
 
 	ws = web.WebSocketResponse()
