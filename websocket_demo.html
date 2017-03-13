@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket demo</title>
+    </head>
+    <body>
+        Listening to id "123".<br />
+        <iframe name="targetframe" style="display:none;"></iframe>
+        <form action="http://localhost:8080/send" method="post" accept-charset="utf-8"
+              enctype="application/x-www-form-urlencoded" target="targetframe">
+            <label for="id">Id</label>
+            <input id="id" name="id" type="text" value="123" autofocus/>
+            <label for="text">Message</label>
+            <input id="text" name="text" type="text" value="Hi"/>
+            <input type="submit" value="send"/>
+        </form>
+        <br />
+        <script>
+            var ws = new WebSocket("ws://127.0.0.1:8080/receive?id=123");
+            var messages = document.createElement('ul');
+            ws.onmessage = function (event) {
+                var messages = document.getElementsByTagName('ul')[0],
+                    message = document.createElement('li'),
+                    content = document.createTextNode(event.data);
+                message.appendChild(content);
+                messages.appendChild(message);
+            };
+            document.body.appendChild(messages);            
+        </script>
+    </body>
+</html>
