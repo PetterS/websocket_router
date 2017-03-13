@@ -14,8 +14,6 @@ parser.add_argument('--address', default="127.0.0.1", help='Bind websocket serve
 parser.add_argument('--port', type=int, default=8080, help='Bind websocket server to this port. Default=8080')
 args = parser.parse_args()
 
-logging.basicConfig(level=logging.INFO)
-
 app = web.Application()
 app["listeners"] = {}
 
@@ -38,7 +36,6 @@ syslogger = get_syslogger()
 
 async def send(request):
 	data = await request.post()
-	logging.info("-- /send %s", data)
 	if "id" not in data or "text" not in data:
 		logging.info("not valid")
 		return web.Response(text="Need id and data.")
